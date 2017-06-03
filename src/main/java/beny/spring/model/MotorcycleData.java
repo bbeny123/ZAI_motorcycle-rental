@@ -1,6 +1,7 @@
 package beny.spring.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 public class MotorcycleData {
 
     @OneToMany(mappedBy = "motorcycle")
-    private Set<RentData> rent;
+    private Set<RentData> rents;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MTO_ID")
@@ -26,6 +27,9 @@ public class MotorcycleData {
 
     @Column(name = "MTO_MODEL", length = 20, nullable = false)
     private String model;
+
+    @Column(name = "MTO_PRODUCTION_DATE", nullable = false)
+    private Date productionDate;
 
     @Column(name = "MTO_CAPACITY", nullable = false)
     private int capacity;
@@ -74,6 +78,14 @@ public class MotorcycleData {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public Date getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(Date productionDate) {
+        this.productionDate = productionDate;
     }
 
     public int getCapacity() {
@@ -141,14 +153,23 @@ public class MotorcycleData {
     }
 
     public Set<RentData> getRent() {
-        if(rent == null) {
-            rent = new HashSet<>();
+        if(rents == null) {
+            rents = new HashSet<>();
         }
-        return rent;
+        return rents;
     }
 
-    public void setRent(Set<RentData> rent) {
-        this.rent = rent;
+    public void setRent(Set<RentData> rents) {
+        this.rents = rents;
+    }
+
+
+    public boolean isAvailable(Date startDate, Date endDate) {
+        for (RentData rent : rents) {
+            if (!(rent.getDateStart().after(startDate) || rent.getDateEnd().before(startDate)) || !(rent.getDateStart().after(endDate) || rent.getDateEnd().before(endDate)))
+                return false;
+        }
+        return true;
     }
 
 }

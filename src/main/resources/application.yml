@@ -6,5 +6,6 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+      use-new-id-generator-mappings: true
     show-sql: true
