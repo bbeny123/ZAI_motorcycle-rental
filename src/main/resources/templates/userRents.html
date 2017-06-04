@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Motorcycles</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+
+
+    <div th:if="${not #lists.isEmpty(rents)}">
+        <table class="table table-striped">
+            <tr>
+                <th sec:authorize="hasAuthority('ADMIN')">ID</th>
+                <th>Manufacturer</th>
+                <th>Model</th>
+                <th>Production Year</th>
+                <th>Capacity</th>
+                <th>Power</th>
+                <th>Weight</th>
+                <th>Consumption</th>
+                <th>Top Speed</th>
+                <th>Colour</th>
+                <th>Price</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
+            </tr>
+            <tr th:each="rent : ${rents}">
+                <td sec:authorize="hasAuthority('ADMIN')" th:text="${rent.id}">ID</td>
+                <td th:text="${rent.motorcycle.manufacturer}">>Manufacturer</td>
+                <td th:text="${rent.motorcycle.model}">Model</td>
+                <td th:text="${rent.motorcycle.productionYear}">Production Year</td>
+                <td th:text="${rent.motorcycle.capacity}">Capacity</td>
+                <td th:text="${rent.motorcycle.power}">Power</td>
+                <td th:text="${rent.motorcycle.weight}">Weight</td>
+                <td th:text="${rent.motorcycle.consumption}">Consumption</td>
+                <td th:text="${rent.motorcycle.topSpeed}">Top Speed</td>
+                <td th:text="${rent.motorcycle.colour}">Colour</td>
+                <td th:text="${rent.motorcycle.price}">Price</td>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/rents/delete/' + rent.id}">Delete</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

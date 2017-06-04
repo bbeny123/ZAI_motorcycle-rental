@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
  */
 
 @Repository
-public class JpaUserRepositoryImpl implements UserRepository {
+public abstract class JpaUserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;

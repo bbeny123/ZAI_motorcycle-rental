@@ -1,15 +1,14 @@
-package beny.spring.repository;
+package beny.spring.service;
 
 import beny.spring.model.RentData;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
 
 /**
  * Created by Beny on 04.06.2017.
  */
-public interface RentRepository {
+public interface RentService {
     RentData findById(Long id) throws DataAccessException;
     Collection<RentData> getAllRents() throws DataAccessException;
     Collection<RentData> getUserRents(Long id) throws DataAccessException;

@@ -14,13 +14,13 @@ import java.util.Set;
 @SequenceGenerator(name = "SEQ_MTO_ID", sequenceName = "SEQ_MTO_ID", allocationSize = 1)
 public class MotorcycleData {
 
-    @OneToMany(mappedBy = "motorcycle")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motorcycle", cascade = {CascadeType.ALL})
     private Set<RentData> rents;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MTO_ID")
     @Column(name = "MTO_ID")
-    private long id;
+    private Long id;
 
     @Column(name = "MTO_MANUFACTURER", length = 20, nullable = false, updatable = false)
     private String manufacturer;
@@ -28,8 +28,8 @@ public class MotorcycleData {
     @Column(name = "MTO_MODEL", length = 20, nullable = false)
     private String model;
 
-    @Column(name = "MTO_PRODUCTION_DATE", nullable = false)
-    private Date productionDate;
+    @Column(name = "MTO_PRODUCTION_YEAR", nullable = false)
+    private int productionYear;
 
     @Column(name = "MTO_CAPACITY", nullable = false)
     private int capacity;
@@ -56,11 +56,11 @@ public class MotorcycleData {
     @Lob
     private byte[] photo;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,12 +80,12 @@ public class MotorcycleData {
         this.model = model;
     }
 
-    public Date getProductionDate() {
-        return productionDate;
+    public int getProductionYear() {
+        return productionYear;
     }
 
-    public void setProductionDate(Date productionDate) {
-        this.productionDate = productionDate;
+    public void setProductionYear(int productionYear) {
+        this.productionYear = productionYear;
     }
 
     public int getCapacity() {

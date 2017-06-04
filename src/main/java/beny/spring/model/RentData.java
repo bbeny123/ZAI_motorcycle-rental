@@ -1,5 +1,7 @@
 package beny.spring.model;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,14 +17,14 @@ public class RentData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RNT_ID")
     @Column(name = "RNT_ID")
-    private long id;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "USR_ID")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "RNT_USR_ID")
     private UserData user;
 
-    @ManyToOne
-    @JoinColumn(name = "MTO_ID")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "RNT_MTO_ID")
     private MotorcycleData motorcycle;
 
     @Column(name = "RNT_DATE_START", nullable = false)
@@ -31,11 +33,11 @@ public class RentData {
     @Column(name = "RNT_DATE_END", nullable = false)
     private Date dateEnd;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,4 +73,11 @@ public class RentData {
         this.dateEnd = dateEnd;
     }
 
+    //@PrePersist
+    //@PreUpdate
+    public void prePersistOrUpdate() {
+        if (this.motorcycle != null) {
+            motorcycle.setId(this.getId());
+        }
+    }
 }
