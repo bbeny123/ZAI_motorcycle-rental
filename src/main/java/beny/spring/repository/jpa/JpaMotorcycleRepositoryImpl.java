@@ -46,4 +46,14 @@ public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
         this.em.remove(findById(id));
     }
 
+    @Transactional
+    @Override
+    public void saveMotorcycle(MotorcycleData motorcycle) throws DataAccessException {
+        if (motorcycle.getId() == null) {
+            this.em.persist(motorcycle);
+        } else {
+            this.em.merge(motorcycle);
+        }
+    }
+
 }

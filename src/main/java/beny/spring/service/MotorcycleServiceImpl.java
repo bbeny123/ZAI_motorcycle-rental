@@ -39,5 +39,11 @@ public class MotorcycleServiceImpl implements MotorcycleService {
         motorcycleRepository.removeMotorcycle(id);
     }
 
+    @Transactional
+    @Override
+    public void saveMotorcycle(MotorcycleData motorcycle) throws DataAccessException {
+        motorcycleRepository.saveMotorcycle(motorcycle);
+    }
+
 
 }

@@ -22,7 +22,7 @@ public class MotorcycleData {
     @Column(name = "MTO_ID")
     private Long id;
 
-    @Column(name = "MTO_MANUFACTURER", length = 20, nullable = false, updatable = false)
+    @Column(name = "MTO_MANUFACTURER", length = 20, nullable = false)
     private String manufacturer;
 
     @Column(name = "MTO_MODEL", length = 20, nullable = false)

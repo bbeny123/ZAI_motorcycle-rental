@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
-    <link rel="stylesheet" type="text/css" href="../../static/css/beny.css" />
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-
 <div class="container">
     <div th:fragment="header">
         <nav class="navbar navbar-default">
@@ -28,15 +27,11 @@
         </div>
         <div class="jumbotron">
             <div class="row text-center">
-                <div class="">
-                    <h2>Spring Framework Guru</h2>
-
-                    <h3>Spring Boot Web App</h3>
-                </div>
+                <h2>Motorcycle Rental</h2>
             </div>
             <div class="row text-center">
-                <img src="../../static/images/NewBannerBOOTS_2.png" width="400"
-                     th:src="@{/images/NewBannerBOOTS_2.png}"/>
+                <img src="../../static/images/ducati2.jpg" width="600"
+                     th:src="@{/images/ducati2.jpg}"/>
             </div>
         </div>
     </div>
