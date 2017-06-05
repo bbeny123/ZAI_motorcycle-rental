@@ -5,88 +5,56 @@
     <title>Motorcycles</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
-</head>
+</head><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <div th:if="${not #lists.isEmpty(motorcycles)}">
-        <div class="container">
-            <div class="col-md-3 col-md-offset-9">
-                <form action="" class="search-form">
-                    <div class="form-group has-feedback">
-                        <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <table class="table table-striped">
-            <tr>
-                <th sec:authorize="hasAuthority('ADMIN')">ID</th>
-                <th>Manufacturer</th>
-                <th>Model</th>
-                <th>Production Year</th>
-                <th>Capacity</th>
-                <th>Power</th>
-                <th>Weight</th>
-                <th>Consumption</th>
-                <th>Top Speed</th>
-                <th>Colour</th>
-                <th>Price</th>
-                <th sec:authorize="hasAnyAuthority('USER','ADMIN')">View</th>
-                <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
-                <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
-            </tr>
-            <tr th:each="motorcycle : ${motorcycles}">
-                <td sec:authorize="hasAuthority('ADMIN')" th:text="${motorcycle.id}">ID</td>
-                <td th:text="${motorcycle.manufacturer}">>Manufacturer</td>
-                <td th:text="${motorcycle.model}">Model</td>
-                <td th:text="${motorcycle.productionYear}">Production Year</td>
-                <td th:text="${motorcycle.capacity}">Capacity</td>
-                <td th:text="${motorcycle.power}">Power</td>
-                <td th:text="${motorcycle.weight}">Weight</td>
-                <td th:text="${motorcycle.consumption}">Consumption</td>
-                <td th:text="${motorcycle.topSpeed}">Top Speed</td>
-                <td th:text="${motorcycle.colour}">Colour</td>
-                <td th:text="${motorcycle.price}">Price</td>
-                <td sec:authorize="hasAnyAuthority('USER','ADMIN')"><a th:href="${'/motorcycle/show/' + motorcycle.id}">View</a></td>
-                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
-                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/delete/' + motorcycle.id}">Delete</a></td>
-            </tr>
+        <table id="myTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th sec:authorize="hasAuthority('ADMIN')">ID</th>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Production Year</th>
+                    <th>Capacity</th>
+                    <th>Power</th>
+                    <th>Weight</th>
+                    <th>Consumption</th>
+                    <th>Top Speed</th>
+                    <th>Colour</th>
+                    <th>Price</th>
+                    <th sec:authorize="hasAnyAuthority('USER','ADMIN')">View</th>
+                    <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
+                    <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="motorcycle : ${motorcycles}">
+                    <td sec:authorize="hasAuthority('ADMIN')" th:text="${motorcycle.id}">ID</td>
+                    <td th:text="${motorcycle.manufacturer}">>Manufacturer</td>
+                    <td th:text="${motorcycle.model}">Model</td>
+                    <td th:text="${motorcycle.productionYear}">Production Year</td>
+                    <td th:text="${motorcycle.capacity}">Capacity</td>
+                    <td th:text="${motorcycle.power}">Power</td>
+                    <td th:text="${motorcycle.weight}">Weight</td>
+                    <td th:text="${motorcycle.consumption}">Consumption</td>
+                    <td th:text="${motorcycle.topSpeed}">Top Speed</td>
+                    <td th:text="${motorcycle.colour}">Colour</td>
+                    <td th:text="${motorcycle.price}">Price</td>
+                    <td sec:authorize="hasAnyAuthority('USER','ADMIN')"><a th:href="${'/motorcycle/show/' + motorcycle.id}">View</a></td>
+                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
+                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/delete/' + motorcycle.id}">Delete</a></td>
+                </tr>
+            </tbody>
         </table>
 
     </div>
-    <div class="row">
-        <div class="form-group col-md-1">
-            <select class="form-control pagination" id="pageSizeSelect">
-                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}" th:selected="${pageSize} == ${selectedPageSize}"></option>
-            </select>
-        </div>
-        <div th:if="${motorcycles.totalPages != 1}" class="form-group col-md-11 pagination-centered" align="center">
-            <ul class="pagination">
-                <li th:class="${motorcycles.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
-                </li>
-                <li th:class="${motorcycles.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.number})}">&larr;</a>
-                </li>
-                <li th:class="${motorcycles.number == (page - 1)} ? 'active pointer-disabled'"
-                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>
-                </li>
-                <li th:class="${motorcycles.number + 1 == motorcycles.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.number + 2})}">&rarr;</a>
-                </li>
-                <li th:class="${motorcycles.number + 1 == motorcycles.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.totalPages})}">&raquo;</a>
-                </li>
-            </ul>
-        </div>
-    </div>
 </div>
-
-<script th:src="@{/js/app.js}"></script>
-
 </body>
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
 </html>
