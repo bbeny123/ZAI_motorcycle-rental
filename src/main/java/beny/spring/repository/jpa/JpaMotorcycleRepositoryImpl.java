@@ -5,12 +5,13 @@ import beny.spring.model.RentData;
 import beny.spring.repository.MotorcycleRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,15 +20,9 @@ import java.util.List;
  */
 
 @Repository
-public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
+public abstract class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
 
     @PersistenceContext
     private EntityManager em;
-
-    @Override
-    public List<MotorcycleData> getAllMotorcycle() throws DataAccessException {
-        Query query = this.em.createQuery("SELECT motorcycle FROM MotorcycleData motorcycle");
-        return query.getResultList();
-    }
 
 }

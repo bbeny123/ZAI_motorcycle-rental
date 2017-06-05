@@ -9,10 +9,18 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
-
-
     <div th:if="${not #lists.isEmpty(motorcycles)}">
+        <div class="container">
+            <div class="col-md-3 col-md-offset-9">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
         <table class="table table-striped">
             <tr>
                 <th sec:authorize="hasAuthority('ADMIN')">ID</th>
@@ -49,7 +57,36 @@
         </table>
 
     </div>
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}" th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${motorcycles.totalPages != 1}" class="form-group col-md-11 pagination-centered" align="center">
+            <ul class="pagination">
+                <li th:class="${motorcycles.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                </li>
+                <li th:class="${motorcycles.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.number})}">&larr;</a>
+                </li>
+                <li th:class="${motorcycles.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>
+                </li>
+                <li th:class="${motorcycles.number + 1 == motorcycles.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.number + 2})}">&rarr;</a>
+                </li>
+                <li th:class="${motorcycles.number + 1 == motorcycles.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{/motorcycles(pageSize=${selectedPageSize}, page=${motorcycles.totalPages})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
+
+<script th:src="@{/js/app.js}"></script>
 
 </body>
 </html>
