@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,8 +44,8 @@ public class MotorcycleController {
         return "motorcycles";
     }
 
-    @RequestMapping(value = "motorcycle/delete/{id}")
-    public String deleteMotorcycle(@PathVariable Long id) {
+    @RequestMapping(value = "motorcycle/delete", method = RequestMethod.DELETE)
+    public String deleteMotorcycle(Long id) {
         try {
             motorcycleService.removeMotorcycle(id);
             return "redirect:/motorcycles?success";
