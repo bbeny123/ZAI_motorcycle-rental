@@ -24,6 +24,11 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
+    public MotorcycleData findById(Long id) throws DataAccessException {
+        return motorcycleRepository.findById(id);
+    }
+
+    @Override
     public List<MotorcycleData> getAllMotorcycle() throws DataAccessException {
         return motorcycleRepository.getAllMotorcycle();
     }

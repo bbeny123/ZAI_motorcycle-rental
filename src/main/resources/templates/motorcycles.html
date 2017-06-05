@@ -9,11 +9,11 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <div th:if="${param.error}" align="center">
+    <div th:if="${param.error}">
         <label style="color:red">Error.</label>
     </div>
-    <div th:if="${param.success}" align="center">
-        <label style="color:red">Error.</label>
+    <div th:if="${param.success}">
+        <label style="color:green">Success.</label>
     </div>
     <table id="myTable" class="table table-striped">
         <thead>
@@ -29,7 +29,7 @@
                 <th>Top Speed</th>
                 <th>Colour</th>
                 <th>Price</th>
-                <th sec:authorize="hasAnyAuthority('USER','ADMIN')">View</th>
+                <th>View</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
@@ -47,7 +47,7 @@
                 <td th:text="${motorcycle.topSpeed}">Top Speed</td>
                 <td th:text="${motorcycle.colour}">Colour</td>
                 <td th:text="${motorcycle.price}">Price</td>
-                <td sec:authorize="hasAnyAuthority('USER','ADMIN')"><a th:href="${'/motorcycle/show/' + motorcycle.id}">View</a></td>
+                <td><a th:href="${'/motorcycle/details/' + motorcycle.id}">View</a></td>
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/delete/' + motorcycle.id}">Delete</a></td>
             </tr>

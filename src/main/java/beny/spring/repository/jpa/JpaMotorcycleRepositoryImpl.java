@@ -43,9 +43,7 @@ public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
     @Transactional
     @Override
     public void removeMotorcycle(Long id) {
-        MotorcycleData toRemove = findById(id);
-        if(toRemove != null)
-            this.em.remove(toRemove);
+        this.em.remove(findById(id));
     }
 
 }

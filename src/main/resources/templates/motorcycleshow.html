@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Motorcycle Details</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-10"><h2>Motorcycle Details</h2></div>
+            <div class="col-sm-2" style="padding-top: 25px;"></div>
+        </div>
+        <div class="form-group" sec:authorize="hasAuthority('ADMIN')">
+            <label class="col-sm-2 control-label">Motorcycle Id:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.id}">Motorcycle Id</p></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Manufacturer:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.manufacturer}">Manufacturer</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Model:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.model}">Model</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Production Year:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.productionYear}">Production Year</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Capacity:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.capacity}">Capacity</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Power:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.power}">Power</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Weight:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.weight}">Weight</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Consumption:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.consumption}">Consumption</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Top Speed:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.topSpeed}">Top Speed</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Colour:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.colour}">Colour</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Price:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="${motorcycle.price}">Price</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Photo:</label>
+            <div class="col-sm-10">
+                <p class="form-control-static" th:text="Photo">Photo</p>
+            </div>
+        </div>
+        <div class="form-group" align="right">
+            <a class="btn btn-default" href="#" th:href="@{/motorcycles}">Back</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
