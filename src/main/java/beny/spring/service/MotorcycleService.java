@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface MotorcycleService {
     List<MotorcycleData> getAllMotorcycle() throws DataAccessException;
+    void removeMotorcycle(Long id) throws DataAccessException;
 }

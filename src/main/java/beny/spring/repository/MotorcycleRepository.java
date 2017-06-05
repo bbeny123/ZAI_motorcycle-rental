@@ -9,5 +9,7 @@ import java.util.List;
  * Created by Beny on 04.06.2017.
  */
 public interface MotorcycleRepository  {
+    MotorcycleData findById(Long id) throws DataAccessException;
     List<MotorcycleData> getAllMotorcycle() throws DataAccessException;
+    void removeMotorcycle(Long id) throws DataAccessException;
 }

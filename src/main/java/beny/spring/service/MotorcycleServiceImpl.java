@@ -5,6 +5,7 @@ import beny.spring.repository.MotorcycleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,5 +27,12 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     public List<MotorcycleData> getAllMotorcycle() throws DataAccessException {
         return motorcycleRepository.getAllMotorcycle();
     }
+
+    @Transactional
+    @Override
+    public void removeMotorcycle(Long id) throws DataAccessException {
+        motorcycleRepository.removeMotorcycle(id);
+    }
+
 
 }

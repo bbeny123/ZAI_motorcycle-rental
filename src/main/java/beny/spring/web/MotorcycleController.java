@@ -5,6 +5,7 @@ import beny.spring.service.MotorcycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,6 +30,12 @@ public class MotorcycleController {
         List<MotorcycleData> motorcycles = motorcycleService.getAllMotorcycle();
         model.addAttribute("motorcycles", motorcycles);
         return "motorcycles";
+    }
+
+    @RequestMapping("motorcycle/delete/{id}")
+    public String delete(@PathVariable Long id){
+        motorcycleService.removeMotorcycle(id);
+        return "redirect:/motorcycles";
     }
 
 

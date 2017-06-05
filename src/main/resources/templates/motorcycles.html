@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
 
     <title>Motorcycles</title>
@@ -9,47 +9,51 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <div th:if="${not #lists.isEmpty(motorcycles)}">
-        <table id="myTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th sec:authorize="hasAuthority('ADMIN')">ID</th>
-                    <th>Manufacturer</th>
-                    <th>Model</th>
-                    <th>Production Year</th>
-                    <th>Capacity</th>
-                    <th>Power</th>
-                    <th>Weight</th>
-                    <th>Consumption</th>
-                    <th>Top Speed</th>
-                    <th>Colour</th>
-                    <th>Price</th>
-                    <th sec:authorize="hasAnyAuthority('USER','ADMIN')">View</th>
-                    <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
-                    <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="motorcycle : ${motorcycles}">
-                    <td sec:authorize="hasAuthority('ADMIN')" th:text="${motorcycle.id}">ID</td>
-                    <td th:text="${motorcycle.manufacturer}">>Manufacturer</td>
-                    <td th:text="${motorcycle.model}">Model</td>
-                    <td th:text="${motorcycle.productionYear}">Production Year</td>
-                    <td th:text="${motorcycle.capacity}">Capacity</td>
-                    <td th:text="${motorcycle.power}">Power</td>
-                    <td th:text="${motorcycle.weight}">Weight</td>
-                    <td th:text="${motorcycle.consumption}">Consumption</td>
-                    <td th:text="${motorcycle.topSpeed}">Top Speed</td>
-                    <td th:text="${motorcycle.colour}">Colour</td>
-                    <td th:text="${motorcycle.price}">Price</td>
-                    <td sec:authorize="hasAnyAuthority('USER','ADMIN')"><a th:href="${'/motorcycle/show/' + motorcycle.id}">View</a></td>
-                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
-                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/delete/' + motorcycle.id}">Delete</a></td>
-                </tr>
-            </tbody>
-        </table>
-
+    <div th:if="${param.error}" align="center">
+        <label style="color:red">Error.</label>
     </div>
+    <div th:if="${param.success}" align="center">
+        <label style="color:red">Error.</label>
+    </div>
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th sec:authorize="hasAuthority('ADMIN')">ID</th>
+                <th>Manufacturer</th>
+                <th>Model</th>
+                <th>Production Year</th>
+                <th>Capacity</th>
+                <th>Power</th>
+                <th>Weight</th>
+                <th>Consumption</th>
+                <th>Top Speed</th>
+                <th>Colour</th>
+                <th>Price</th>
+                <th sec:authorize="hasAnyAuthority('USER','ADMIN')">View</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="motorcycle : ${motorcycles}">
+                <td sec:authorize="hasAuthority('ADMIN')" th:text="${motorcycle.id}">ID</td>
+                <td th:text="${motorcycle.manufacturer}">>Manufacturer</td>
+                <td th:text="${motorcycle.model}">Model</td>
+                <td th:text="${motorcycle.productionYear}">Production Year</td>
+                <td th:text="${motorcycle.capacity}">Capacity</td>
+                <td th:text="${motorcycle.power}">Power</td>
+                <td th:text="${motorcycle.weight}">Weight</td>
+                <td th:text="${motorcycle.consumption}">Consumption</td>
+                <td th:text="${motorcycle.topSpeed}">Top Speed</td>
+                <td th:text="${motorcycle.colour}">Colour</td>
+                <td th:text="${motorcycle.price}">Price</td>
+                <td sec:authorize="hasAnyAuthority('USER','ADMIN')"><a th:href="${'/motorcycle/show/' + motorcycle.id}">View</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/delete/' + motorcycle.id}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
 </body>
 <script>
