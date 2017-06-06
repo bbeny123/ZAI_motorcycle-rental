@@ -1,8 +1,6 @@
 package beny.spring.model;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
