@@ -15,7 +15,8 @@ CREATE TABLE MOTORCYCLES
   MTO_TOP_SPEED             NUMBER(6)         CONSTRAINT NN_MTO_TOP_SPEED NOT NULL,
   MTO_COLOUR                NVARCHAR2(20)     CONSTRAINT NN_MTO_COLOUR NOT NULL,
   MTO_PRICE                 NUMBER(6)         CONSTRAINT NN_MTO_PRICE NOT NULL,
-  MTO_PHOTO                 BLOB
+  MTO_PHOTO                 BLOB,
+  MTO_PHOTO_BASE64          CLOB
 );
 
 --------------------------------------------------------

@@ -55,11 +55,11 @@ public class MotorcycleController {
 
     @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
     public String saveMotorcycle(MotorcycleData motorcycle, @RequestParam("file") MultipartFile file) {
+        System.out.println(!file.isEmpty());
         try {
-            if(file != null)
+            if(!file.isEmpty())
                 motorcycle.setPhoto(file.getBytes());
             motorcycleService.saveMotorcycle(motorcycle);
-
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/motorcycles?error";

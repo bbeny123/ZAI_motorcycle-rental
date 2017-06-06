@@ -3,6 +3,8 @@ package beny.spring.repository.jpa;
 import beny.spring.model.MotorcycleData;
 import beny.spring.model.RentData;
 import beny.spring.repository.MotorcycleRepository;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +63,9 @@ public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
         if (motorcycle.getId() == null) {
             this.em.persist(motorcycle);
         } else {
+            if(motorcycle.getPhoto() == null) {
+                motorcycle.setPhoto(findById(motorcycle.getId()).getPhoto());
+            }
             this.em.merge(motorcycle);
         }
     }

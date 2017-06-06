@@ -1,5 +1,9 @@
 package beny.spring.model;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +14,8 @@ import java.util.List;
  */
 
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "MOTORCYCLES")
 @SequenceGenerator(name = "SEQ_MTO_ID", sequenceName = "SEQ_MTO_ID", allocationSize = 1)
 public class MotorcycleData {
@@ -55,6 +61,10 @@ public class MotorcycleData {
     @Column(name = "MTO_PHOTO")
     @Lob
     private byte[] photo;
+
+    @Column(name = "MTO_PHOTO_BASE64")
+    @Lob
+    private String photoString;
 
     public Long getId() {
         return id;
@@ -149,7 +159,19 @@ public class MotorcycleData {
     }
 
     public void setPhoto(byte[] photo) {
-        this.photo = photo;
+        if(photo != null) {
+            photoString = Base64.encodeBase64String(photo);
+            this.photo = photo;
+        }
+    }
+
+    public String getPhotoString() {
+        return photoString;
+    }
+
+    public void setPhotoString(String photoString) {
+        if(photoString.length() != 0)
+           this.photoString = photoString;
     }
 
     public List<RentData> getRent() {
