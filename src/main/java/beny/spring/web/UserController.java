@@ -5,6 +5,7 @@ import beny.spring.model.MotorcycleData;
 import beny.spring.model.UserData;
 import beny.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,19 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
+    @RequestMapping(value = "/user/{id}")
+    public String showUser(@PathVariable Long id, Model model) {
+        UserData user = userService.getUserById(id);
+        if(user != null) {
+            model.addAttribute("user", user);
+            return "usershow";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping(value = "user/edit/{id}", method = RequestMethod.PUT)
     public ModelAndView saveUser(@PathVariable Long id, UserData user, String oldPassword, String email, BindingResult result) {
 
@@ -79,6 +93,8 @@ public class UserController {
 
         try {
             userService.save(user);
+            if(!currentUser.getRole().equals("ADMIN"))
+                return new ModelAndView("redirect:/user/{id}");
             return new ModelAndView("redirect:/users?success");
         } catch(Exception e) {
             result.rejectValue("email", "error");
@@ -88,6 +104,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping(value = "/user/edit/{id}")
     public String editUser(@PathVariable Long id, Model model) {
         UserData userData = userService.getUserById(id);
