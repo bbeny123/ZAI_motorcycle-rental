@@ -55,7 +55,6 @@ public class MotorcycleController {
 
     @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
     public String saveMotorcycle(MotorcycleData motorcycle, @RequestParam("file") MultipartFile file) {
-        System.out.println(!file.isEmpty());
         try {
             if(!file.isEmpty())
                 motorcycle.setPhoto(file.getBytes());

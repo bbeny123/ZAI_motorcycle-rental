@@ -13,8 +13,6 @@ import java.util.List;
  */
 
 @Entity
-@DynamicUpdate
-@DynamicInsert
 @Table(name = "MOTORCYCLES")
 @SequenceGenerator(name = "SEQ_MTO_ID", sequenceName = "SEQ_MTO_ID", allocationSize = 1)
 public class MotorcycleData {
