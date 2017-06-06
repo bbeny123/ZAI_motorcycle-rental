@@ -70,7 +70,7 @@ public class MotorcycleController {
         return "motorcycleform";
     }
 
-    @RequestMapping(value = "motorcycle", method = RequestMethod.POST)
+    @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
     public String saveMotorcycle(MotorcycleData motorcycle) throws Exception {
         motorcycleService.saveMotorcycle(motorcycle);
         return "redirect:/motorcycles?success";

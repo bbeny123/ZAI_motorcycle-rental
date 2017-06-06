@@ -13,7 +13,7 @@ import java.util.List;
 @SequenceGenerator(name = "SEQ_MTO_ID", sequenceName = "SEQ_MTO_ID", allocationSize = 1)
 public class MotorcycleData {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motorcycle", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motorcycle", cascade = {CascadeType.ALL})
     private List<RentData> rents;
 
     @Id
