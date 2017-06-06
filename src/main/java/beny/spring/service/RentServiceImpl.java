@@ -66,16 +66,4 @@ public class RentServiceImpl implements RentService {
     public void cancelRent(Long id) throws DataAccessException {
         rentRepository.cancelRent(id);
     }
-
-    @Transactional
-    @Override
-    public void saveRent(RentData rentData) throws DataAccessException {
-        rentRepository.saveRent(rentData);
-    }
-
-    @Transactional
-    @Override
-    public void deleteRent(Long id) throws DataAccessException {
-        rentRepository.deleteRent(id);
-    }
 }

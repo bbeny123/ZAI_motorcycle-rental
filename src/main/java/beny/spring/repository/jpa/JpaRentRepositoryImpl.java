@@ -92,20 +92,4 @@ public class JpaRentRepositoryImpl implements RentRepository {
         rentData.setStatus(RentData.Statuses.CANCELED);
         this.em.merge(rentData);
     }
-
-    @Transactional
-    @Override
-    public void saveRent(RentData rentData) throws DataAccessException {
-        if (rentData.getId() == null) {
-            this.em.persist(rentData);
-        } else {
-            this.em.merge(rentData);
-        }
-    }
-
-    @Transactional
-    @Override
-    public void deleteRent(Long id) throws DataAccessException {
-        this.em.remove(findById(id));
-    }
 }

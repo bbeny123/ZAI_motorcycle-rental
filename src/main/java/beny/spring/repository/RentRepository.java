@@ -18,6 +18,4 @@ public interface RentRepository {
     void newRent(Long id, Long mtoId) throws DataAccessException;
     void finishRent(Long id) throws DataAccessException;
     void cancelRent(Long id) throws DataAccessException;
-    void saveRent(RentData rentData) throws DataAccessException;
-    void deleteRent(Long id) throws DataAccessException;
 }
