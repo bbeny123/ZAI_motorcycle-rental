@@ -35,7 +35,7 @@ public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
     }
 
     @Override
-    public List<MotorcycleData> getAllMotorcycle() throws DataAccessException {
+    public List getAllMotorcycle() throws DataAccessException {
         Query query = this.em.createQuery("SELECT motorcycle FROM MotorcycleData motorcycle");
         return query.getResultList();
     }

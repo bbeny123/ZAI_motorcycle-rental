@@ -29,7 +29,7 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
-    public List<MotorcycleData> getAllMotorcycle() throws DataAccessException {
+    public List getAllMotorcycle() throws DataAccessException {
         return motorcycleRepository.getAllMotorcycle();
     }
 

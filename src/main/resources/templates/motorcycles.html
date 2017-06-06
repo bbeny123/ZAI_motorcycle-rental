@@ -46,7 +46,7 @@
                 <td th:text="${motorcycle.price}">Price</td>
                 <td><a th:href="${'/motorcycle/details/' + motorcycle.id}">View</a></td>
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
-                <td sec:authorize="hasAuthority('ADMIN')"><form name="delete" th:action="@{/motorcycle/delete}" th:method="delete"><input type="hidden" name="id" th:value="${motorcycle.id}" /></form><a href="javascript:document.forms['delete'].submit()">Delete</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')"><form th:name="delete + ${motorcycle.id}" th:action="@{/motorcycle/delete}" th:method="delete"><input type="hidden" name="id" th:value="${motorcycle.id}" /></form><a th:href="'javascript:document.forms[\'delete' + ${motorcycle.id} + '\'].submit();'">Delete</a></td>
             </tr>
         </tbody>
     </table>

@@ -22,11 +22,11 @@ public class RentData {
     @Column(name = "RNT_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RNT_USR_ID")
     private UserData user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RNT_MTO_ID")
     private MotorcycleData motorcycle;
 

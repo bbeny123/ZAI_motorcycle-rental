@@ -38,7 +38,7 @@ public class MotorcycleController {
 
     @RequestMapping(value = "/motorcycles", method = RequestMethod.GET)
     public String getMotorcycles(Model model){
-        List<MotorcycleData> motorcycles = motorcycleService.getAllMotorcycle();
+        List motorcycles = motorcycleService.getAllMotorcycle();
         model.addAttribute("motorcycles", motorcycles);
         return "motorcycles";
     }
