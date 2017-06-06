@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,8 +54,16 @@ public class MotorcycleController {
     }
 
     @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
-    public String saveMotorcycle(MotorcycleData motorcycle) throws Exception {
-        motorcycleService.saveMotorcycle(motorcycle);
+    public String saveMotorcycle(MotorcycleData motorcycle, @RequestParam("file") MultipartFile file) {
+        try {
+            if(file != null)
+                motorcycle.setPhoto(file.getBytes());
+            motorcycleService.saveMotorcycle(motorcycle);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/motorcycles?error";
+        }
         return "redirect:/motorcycles?success";
     }
 
@@ -83,6 +93,5 @@ public class MotorcycleController {
         model.addAttribute("motorcycle", new MotorcycleData());
         return "motorcycleform";
     }
-
 
 }
