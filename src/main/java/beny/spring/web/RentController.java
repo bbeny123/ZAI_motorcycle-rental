@@ -62,8 +62,7 @@ public class RentController {
         if(!motorcycleService.findById(mtoId).isAvailable())
             return "redirect:/motorcycles?error";
 
-        CurrentUserControllerAdvice a = new CurrentUserControllerAdvice();
-        CurrentUser currentUser = a.getCurrentUser(SecurityContextHolder.getContext().getAuthentication());
+        CurrentUser currentUser = new CurrentUserControllerAdvice().getCurrentUser(SecurityContextHolder.getContext().getAuthentication());
         Long usrId = currentUser.getId();
         try {
             rentService.newRent(currentUser.getId(), mtoId);

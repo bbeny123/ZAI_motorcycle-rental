@@ -12,12 +12,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<UserData> getUserById(long id);
-
+    UserData getUserById(long id);
     Optional<UserData> getUserByEmail(String email);
-
     Collection<UserData> getAllUsers();
-
     UserData save(UserData user);
-
+    void delete(Long aLong);
 }

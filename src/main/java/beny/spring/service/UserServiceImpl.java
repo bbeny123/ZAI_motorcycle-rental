@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserData> getUserById(long id) {
-        return Optional.ofNullable(userRepository.findOne(id));
+    public UserData getUserById(long id) {
+        return userRepository.findOne(id);
     }
 
     @Override
@@ -31,10 +31,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<UserData> getAllUsers() {
-        return userRepository.findAll(new Sort("email"));
+        return userRepository.findAll();
     }
 
+    @Override
     public UserData save(UserData user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public void delete(Long aLong) {
+        userRepository.delete(aLong);
     }
 }

@@ -15,9 +15,9 @@ public class UserData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USR_ID")
 	@Column(name = "USR_ID")
-	private long id;
+	private Long id;
 	
-	@Column(name = "USR_LOGIN", length = 20, nullable = false, updatable = false)
+	@Column(name = "USR_LOGIN", length = 20, nullable = false)
 	private String login;
 	
 	@Column(name = "USR_PASSWORD", length = 60, nullable = false)
@@ -29,17 +29,17 @@ public class UserData {
 	@Column(name = "USR_LAST_NAME", length = 30, nullable = false)
 	private String lastName;
 
-	@Column(name = "USR_EMAIL", length = 40, nullable = false)
+	@Column(name = "USR_EMAIL", length = 40, nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "USR_ADMIN", nullable = false)
 	private int admin;
 
-    public long getId() {
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

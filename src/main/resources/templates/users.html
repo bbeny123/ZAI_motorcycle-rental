@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head lang="en">
-
-    <title>Motorcycles</title>
-
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
-
-
-    <div th:if="${not #lists.isEmpty(users)}">
-        <table class="table table-striped">
+    <div th:if="${param.error}">
+        <label style="color:red">Error.</label>
+    </div>
+    <div th:if="${param.success}">
+        <label style="color:green">Success.</label>
+    </div>
+    <table id="myTable" class="table table-striped">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Login</th>
-                <th>Password</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>E-mail</th>
                 <th>Admin</th>
-                <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
+        </thead>
+        <tbody>
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}">ID</td>
                 <td th:text="${user.login}">>Login</td>
-                <td th:text="${user.password}">Password</td>
                 <td th:text="${user.firstName}">First Name</td>
                 <td th:text="${user.lastName}">Last Name</td>
                 <td th:text="${user.email}">E-mail</td>
                 <td th:text="${user.admin}">Admin</td>
-                <td><a th:href="${'/user/show/' + user.id}">View</a></td>
                 <td><a th:href="${'/user/edit/' + user.id}">Edit</a></td>
-                <td><a th:href="${'/user/delete/' + user.id}">Delete</a></td>
+                <td><form th:name="delete + ${user.id}" th:action="@{/user/delete}" th:method="delete"><input type="hidden" name="id" th:value="${user.id}" /></form><a th:href="'javascript:document.forms[\'delete' + ${user.id} + '\'].submit();'">Delete</a></td>
             </tr>
-        </table>
+        </tbody>
+    </table>
 
-    </div>
 </div>
-
+<div><br/></div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
 </html>
