@@ -1,10 +1,8 @@
 package beny.spring.model;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -12,7 +10,7 @@ import java.util.Set;
 public class UserData {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.ALL})
-	private Set<RentData> rent;
+	private List<RentData> rent;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USR_ID")
@@ -36,10 +34,6 @@ public class UserData {
 
 	@Column(name = "USR_ADMIN", nullable = false)
 	private int admin;
-
-	@Column(name = "USR_AVATAR")
-	@Lob
-	private byte[] avatar;
 
     public long getId() {
 		return id;
@@ -104,22 +98,14 @@ public class UserData {
 			return "USER";
 	}
 
-	public byte[] getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(byte[] avatar) {
-		this.avatar = avatar;
-	}
-
-	public Set<RentData> getRent() {
+	public List<RentData> getRent() {
 		if(rent == null) {
-			rent = new HashSet<>();
+			rent = new ArrayList<>();
 		}
 		return rent;
 	}
 
-	public void setRent(Set<RentData> rent) {
+	public void setRent(List<RentData> rent) {
 		this.rent = rent;
 	}
 

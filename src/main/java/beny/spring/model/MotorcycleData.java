@@ -1,9 +1,9 @@
 package beny.spring.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created Beny on 03.06.2017.
@@ -15,7 +15,7 @@ import java.util.Set;
 public class MotorcycleData {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "motorcycle", cascade = {CascadeType.ALL})
-    private Set<RentData> rents;
+    private List<RentData> rents;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MTO_ID")
@@ -152,18 +152,18 @@ public class MotorcycleData {
         this.photo = photo;
     }
 
-    public Set<RentData> getRent() {
+    public List<RentData> getRent() {
         if(rents == null) {
-            rents = new HashSet<>();
+            rents = new ArrayList<>();
         }
         return rents;
     }
 
-    public void setRent(Set<RentData> rents) {
+    public void setRent(List<RentData> rents) {
         this.rents = rents;
     }
 
-
+    /*
     public boolean isAvailable(Date startDate, Date endDate) {
         for (RentData rent : rents) {
             if (!(rent.getDateStart().after(startDate) || rent.getDateEnd().before(startDate)) || !(rent.getDateStart().after(endDate) || rent.getDateEnd().before(endDate)))
@@ -171,5 +171,5 @@ public class MotorcycleData {
         }
         return true;
     }
-
+    */
 }

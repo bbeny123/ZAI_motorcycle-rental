@@ -26,6 +26,7 @@
                 <th>Top Speed</th>
                 <th>Colour</th>
                 <th>Price</th>
+                <th>Status</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
             <tr th:each="rent : ${rents}">
@@ -40,6 +41,7 @@
                 <td th:text="${rent.motorcycle.topSpeed}">Top Speed</td>
                 <td th:text="${rent.motorcycle.colour}">Colour</td>
                 <td th:text="${rent.motorcycle.price}">Price</td>
+                <td th:text="${rent.status}">Status</td>
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/rents/delete/' + rent.id}">Delete</a></td>
             </tr>
         </table>

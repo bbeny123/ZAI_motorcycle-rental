@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collection;
-import java.util.NoSuchElementException;
-
 /**
  * Created by Beny on 04.06.2017.
  */

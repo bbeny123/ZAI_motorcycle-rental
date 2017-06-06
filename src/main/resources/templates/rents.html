@@ -21,6 +21,7 @@
                 <th>Motorcycle ID</th>
                 <th>Manufacturer</th>
                 <th>Model</th>
+                <th>Status</th>
                 <th>Delete</th>
             </tr>
             <tr th:each="rent : ${rents}">
@@ -30,6 +31,7 @@
                 <td th:text="${rent.motorcycle.id}">Motorcycle ID</td>
                 <td th:text="${rent.motorcycle.manufacturer}">Manufacturer</td>
                 <td th:text="${rent.motorcycle.model}">Model</td>
+                <td th:text="${rent.status}">Status</td>
                 <td><a th:href="${'/rent/delete/' + rent.id}">Delete</a></td>
             </tr>
         </table>

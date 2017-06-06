@@ -1,7 +1,5 @@
 package beny.spring.model;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +11,12 @@ import java.util.Date;
 @Table(name = "RENTS")
 @SequenceGenerator(name = "SEQ_RNT_ID", sequenceName = "SEQ_RNT_ID", allocationSize = 1)
 public class RentData {
+
+    public interface Statuses {
+        String ACTIVE = "Active";        				/** Active */
+        String CANCELED = "Canceled";  	                /** Canceled */
+        String FINISHED = "Finished";       			/** Finished */
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RNT_ID")
@@ -27,11 +31,8 @@ public class RentData {
     @JoinColumn(name = "RNT_MTO_ID")
     private MotorcycleData motorcycle;
 
-    @Column(name = "RNT_DATE_START", nullable = false)
-    private Date dateStart;
-
-    @Column(name = "RNT_DATE_END", nullable = false)
-    private Date dateEnd;
+    @Column(name = "RNT_STATUS", length = 10, nullable = false)
+    private String status;
 
     public Long getId() {
         return id;
@@ -57,27 +58,12 @@ public class RentData {
         this.motorcycle = motorcycle;
     }
 
-    public Date getDateStart() {
-        return dateStart;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    //@PrePersist
-    //@PreUpdate
-    public void prePersistOrUpdate() {
-        if (this.motorcycle != null) {
-            motorcycle.setId(this.getId());
-        }
-    }
 }
