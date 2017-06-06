@@ -1,7 +1,6 @@
 package beny.spring.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by Beny on 03.06.2017.

@@ -2,7 +2,6 @@ package beny.spring.repository;
 
 import beny.spring.model.RentData;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
 
