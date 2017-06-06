@@ -1,7 +1,11 @@
 package beny.spring.repository.jpa;
 
+import beny.spring.model.MotorcycleData;
 import beny.spring.model.RentData;
+import beny.spring.model.UserData;
+import beny.spring.repository.MotorcycleRepository;
 import beny.spring.repository.RentRepository;
+import beny.spring.service.MotorcycleService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +15,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Beny on 04.06.2017.
@@ -35,24 +40,62 @@ public class JpaRentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Collection<RentData> getAllRents() throws DataAccessException {
-        Query query = this.em.createQuery("SELECT rent FROM RentData rent");
-        Collection<RentData> a = query.getResultList();
-        System.out.println(a.isEmpty());
-        return a;
+    public List getActiveRents() throws DataAccessException {
+        Query query = this.em.createQuery("SELECT rent FROM RentData rent WHERE rent.status = 'Active'");
+        return query.getResultList();
     }
 
     @Override
-    public Collection<RentData> getUserRents(Long id) throws DataAccessException {
+    public List getAllRents() throws DataAccessException {
+        Query query = this.em.createQuery("SELECT rent FROM RentData rent");
+        return query.getResultList();
+    }
+
+    @Override
+    public List getAllUserRents(Long id) throws DataAccessException {
         Query query = this.em.createQuery("SELECT rent FROM RentData rent WHERE rent.user.id = :id");
         query.setParameter("id", id);
         return query.getResultList();
     }
 
     @Override
+    public List getActiveUserRents(Long id) throws DataAccessException {
+        Query query = this.em.createQuery("SELECT rent FROM RentData rent WHERE rent.user.id = :id AND rent.status = 'Active'");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
     @Transactional
-    public void saveRent(RentData rentData) {
-        System.out.println(rentData.getMotorcycle().getId());
+    @Override
+    public void newRent(Long id, Long mtoId) throws DataAccessException {
+        RentData rentData = new RentData();
+        rentData.setMotorcycle(new MotorcycleData());
+        rentData.getMotorcycle().setId(mtoId);
+        rentData.setUser(new UserData());
+        rentData.getUser().setId(id);
+        rentData.setStatus(RentData.Statuses.ACTIVE);
+        this.em.persist(rentData);
+    }
+
+    @Transactional
+    @Override
+    public void finishRent(Long id) throws DataAccessException {
+        RentData rentData = findById(id);
+        rentData.setStatus(RentData.Statuses.FINISHED);
+        this.em.merge(rentData);
+    }
+
+    @Transactional
+    @Override
+    public void cancelRent(Long id) throws DataAccessException {
+        RentData rentData = findById(id);
+        rentData.setStatus(RentData.Statuses.CANCELED);
+        this.em.merge(rentData);
+    }
+
+    @Transactional
+    @Override
+    public void saveRent(RentData rentData) throws DataAccessException {
         if (rentData.getId() == null) {
             this.em.persist(rentData);
         } else {
@@ -60,8 +103,9 @@ public class JpaRentRepositoryImpl implements RentRepository {
         }
     }
 
+    @Transactional
     @Override
-    public void deleteRent(Long id) {
+    public void deleteRent(Long id) throws DataAccessException {
         this.em.remove(findById(id));
     }
 }

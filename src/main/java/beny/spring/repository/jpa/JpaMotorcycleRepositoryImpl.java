@@ -1,6 +1,7 @@
 package beny.spring.repository.jpa;
 
 import beny.spring.model.MotorcycleData;
+import beny.spring.model.RentData;
 import beny.spring.repository.MotorcycleRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Beny on 04.06.2017.
@@ -35,14 +37,21 @@ public class JpaMotorcycleRepositoryImpl implements MotorcycleRepository {
     }
 
     @Override
-    public List getAllMotorcycle() throws DataAccessException {
+    public List getAllMotorcycles() throws DataAccessException {
         Query query = this.em.createQuery("SELECT motorcycle FROM MotorcycleData motorcycle");
         return query.getResultList();
     }
 
+    @Override
+    public List getAllAvailableMotorcycles() throws DataAccessException {
+        List<MotorcycleData> tempList = getAllMotorcycles();
+        tempList.removeIf(e -> e.getRent().stream().anyMatch(p -> p.getStatus().equals(RentData.Statuses.ACTIVE)));
+        return tempList;
+    }
+
     @Transactional
     @Override
-    public void removeMotorcycle(Long id) {
+    public void removeMotorcycle(Long id) throws DataAccessException {
         this.em.remove(findById(id));
     }
 

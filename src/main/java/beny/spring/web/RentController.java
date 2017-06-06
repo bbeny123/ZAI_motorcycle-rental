@@ -1,15 +1,17 @@
 package beny.spring.web;
 
+import beny.spring.model.CurrentUser;
 import beny.spring.model.RentData;
+import beny.spring.service.MotorcycleService;
 import beny.spring.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Beny on 04.06.2017.
@@ -19,52 +21,85 @@ import org.springframework.web.servlet.ModelAndView;
 public class RentController {
 
     private final RentService rentService;
+    private final MotorcycleService motorcycleService;
 
     @Autowired
-    public RentController(RentService rentService) {
+    public RentController(RentService rentService, MotorcycleService motorcycleService) {
         this.rentService = rentService;
+        this.motorcycleService = motorcycleService;
     }
 
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
-    @RequestMapping("/user/{id}")
-    public ModelAndView getUserRents(@PathVariable Long id, Model model) {
-        return new ModelAndView("userRents", "rents", rentService.getUserRents(id));
+    @RequestMapping("/user/{id}/rents")
+    public String getActiveUserRents(@PathVariable Long id, Model model) {
+        model.addAttribute("rents",rentService.getActiveUserRents(id));
+        return "userRents";
     }
 
-    @RequestMapping(value = "/rents/all", method = RequestMethod.GET)
-    public String list(Model model){
-        model.addAttribute("rents", rentService.getAllRents());
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
+    @RequestMapping("/user/{id}/rents/all")
+    public String getAllUserRents(@PathVariable Long id, Model model) {
+        model.addAttribute("rents",rentService.getAllUserRents(id));
+        model.addAttribute("all", Boolean.TRUE);
+        return "userRents";
+    }
+
+    @RequestMapping(value = "/rents", method = RequestMethod.GET)
+    public String getActiveRents(Model model){
+        model.addAttribute("rents", rentService.getActiveRents());
         return "rents";
     }
 
-    @RequestMapping("rent/{id}")
-    public String showProduct(@PathVariable Long id, Model model){
-        model.addAttribute("rent", rentService.findById(id));
-        return "rentshow";
+    @RequestMapping(value = "/rents/all", method = RequestMethod.GET)
+    public String getAllRents(Model model){
+        model.addAttribute("rents", rentService.getAllRents());
+        model.addAttribute("all", Boolean.TRUE);
+        return "rents";
     }
 
-    @RequestMapping("rent/edit/{id}")
-    public String edit(@PathVariable Long id, Model model){
-        model.addAttribute("rent", rentService.findById(id));
-        return "rentform";
+    @RequestMapping(value = "motorcycle/rent/{mtoId}", method = RequestMethod.POST)
+    public String rentMotorcycle(@PathVariable Long mtoId) {
+        if(!motorcycleService.findById(mtoId).isAvailable())
+            return "redirect:/motorcycles?error";
+
+        CurrentUserControllerAdvice a = new CurrentUserControllerAdvice();
+        CurrentUser currentUser = a.getCurrentUser(SecurityContextHolder.getContext().getAuthentication());
+        Long usrId = currentUser.getId();
+        try {
+            rentService.newRent(currentUser.getId(), mtoId);
+            return "redirect:/user/" + usrId + "/rents";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/motorcycles?error";
+        }
     }
 
-    @RequestMapping("rent/new")
-    public String newProduct(Model model){
-        model.addAttribute("rent", new RentData());
-        return "rentform";
+    @RequestMapping(value = "rent/finish/{id}", method = RequestMethod.PUT)
+    public String finishRent(@PathVariable Long id) {
+        if(!rentService.findById(id).isActive())
+            return "redirect:/rents/all?error";
+
+        try {
+            rentService.finishRent(id);
+            return "redirect:/rents/all?success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/rents/all?error";
+        }
     }
 
-    @RequestMapping(value = "rent", method = RequestMethod.POST)
-    public String saveProduct(RentData rent){
-        rentService.saveRent(rent);
-        return "redirect:/rent/" + rent.getId();
-    }
+    @RequestMapping(value = "rent/cancel/{id}", method = RequestMethod.PUT)
+    public String cancelRent(@PathVariable Long id) {
+        if(!rentService.findById(id).isActive())
+            return "redirect:/rents/all?error";
 
-    @RequestMapping("rent/delete/{id}")
-    public String delete(@PathVariable Long id){
-        rentService.deleteRent(id);
-        return "redirect:/rents";
+        try {
+            rentService.cancelRent(id);
+            return "redirect:/rents/all?success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/rents/all?error";
+        }
     }
 
 }

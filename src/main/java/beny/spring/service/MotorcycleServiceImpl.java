@@ -29,8 +29,13 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
-    public List getAllMotorcycle() throws DataAccessException {
-        return motorcycleRepository.getAllMotorcycle();
+    public List getAllMotorcycles() throws DataAccessException {
+        return motorcycleRepository.getAllMotorcycles();
+    }
+
+    @Override
+    public List getAllAvailableMotorcycles() throws DataAccessException {
+        return motorcycleRepository.getAllAvailableMotorcycles();
     }
 
     @Transactional

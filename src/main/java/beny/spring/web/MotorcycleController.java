@@ -38,9 +38,23 @@ public class MotorcycleController {
 
     @RequestMapping(value = "/motorcycles", method = RequestMethod.GET)
     public String getMotorcycles(Model model){
-        List motorcycles = motorcycleService.getAllMotorcycle();
+        List motorcycles = motorcycleService.getAllAvailableMotorcycles();
         model.addAttribute("motorcycles", motorcycles);
         return "motorcycles";
+    }
+
+    @RequestMapping(value = "/motorcycles/all", method = RequestMethod.GET)
+    public String getAllMotorcycles(Model model){
+        List motorcycles = motorcycleService.getAllMotorcycles();
+        model.addAttribute("motorcycles", motorcycles);
+        model.addAttribute("all", Boolean.TRUE);
+        return "motorcycles";
+    }
+
+    @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
+    public String saveMotorcycle(MotorcycleData motorcycle) throws Exception {
+        motorcycleService.saveMotorcycle(motorcycle);
+        return "redirect:/motorcycles?success";
     }
 
     @RequestMapping(value = "motorcycle/delete", method = RequestMethod.DELETE)
@@ -70,10 +84,5 @@ public class MotorcycleController {
         return "motorcycleform";
     }
 
-    @RequestMapping(value = "motorcycles", method = RequestMethod.POST)
-    public String saveMotorcycle(MotorcycleData motorcycle) throws Exception {
-        motorcycleService.saveMotorcycle(motorcycle);
-        return "redirect:/motorcycles?success";
-    }
 
 }

@@ -162,13 +162,12 @@ public class MotorcycleData {
         this.rents = rents;
     }
 
-    /*
-    public boolean isAvailable(Date startDate, Date endDate) {
+    public boolean isAvailable() {
         for (RentData rent : rents) {
-            if (!(rent.getDateStart().after(startDate) || rent.getDateEnd().before(startDate)) || !(rent.getDateStart().after(endDate) || rent.getDateEnd().before(endDate)))
+            if(rent.getStatus().equals(RentData.Statuses.ACTIVE)) {
                 return false;
+            }
         }
         return true;
     }
-    */
 }

@@ -30,27 +30,52 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Collection<RentData> getAllRents() throws DataAccessException {
-        List<RentData> a = (List) rentRepository.getAllRents();
-        for (RentData b : a) {
-            System.out.println(b.getId());
-        }
+    public List getActiveRents() throws DataAccessException {
+        return rentRepository.getActiveRents();
+    }
+
+    @Override
+    public List getAllRents() throws DataAccessException {
         return rentRepository.getAllRents();
     }
 
     @Override
-    public Collection<RentData> getUserRents(Long id) throws DataAccessException {
-        return rentRepository.getUserRents(id);
+    public List getActiveUserRents(Long id) throws DataAccessException {
+        return rentRepository.getActiveUserRents(id);
     }
 
     @Override
+    public List getAllUserRents(Long id) throws DataAccessException {
+        return rentRepository.getAllUserRents(id);
+    }
+
     @Transactional
-    public void saveRent(RentData rentData) {
+    @Override
+    public void newRent(Long id, Long mtoId) throws DataAccessException {
+        rentRepository.newRent(id, mtoId);
+    }
+
+    @Transactional
+    @Override
+    public void finishRent(Long id) throws DataAccessException {
+        rentRepository.finishRent(id);
+    }
+
+    @Transactional
+    @Override
+    public void cancelRent(Long id) throws DataAccessException {
+        rentRepository.cancelRent(id);
+    }
+
+    @Transactional
+    @Override
+    public void saveRent(RentData rentData) throws DataAccessException {
         rentRepository.saveRent(rentData);
     }
 
+    @Transactional
     @Override
-    public void deleteRent(Long id) {
+    public void deleteRent(Long id) throws DataAccessException {
         rentRepository.deleteRent(id);
     }
 }

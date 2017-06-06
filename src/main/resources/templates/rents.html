@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
-
-    <title>Motorcycles</title>
-
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
-
-
-    <div th:if="${not #lists.isEmpty(rents)}">
-        <table class="table table-striped">
+    <div th:if="${param.error}">
+        <label style="color:red">Error.</label>
+    </div>
+    <div th:if="${param.success}">
+        <label style="color:green">Success.</label>
+    </div>
+    <table id="myTable" class="table table-striped">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>User ID</th>
@@ -22,8 +22,11 @@
                 <th>Manufacturer</th>
                 <th>Model</th>
                 <th>Status</th>
-                <th>Delete</th>
+                <th>Finish</th>
+                <th>Cancel</th>
             </tr>
+        </thead>
+        <tbody>
             <tr th:each="rent : ${rents}">
                 <td th:text="${rent.id}">ID</td>
                 <td th:text="${rent.user.id}">>User ID</td>
@@ -32,12 +35,24 @@
                 <td th:text="${rent.motorcycle.manufacturer}">Manufacturer</td>
                 <td th:text="${rent.motorcycle.model}">Model</td>
                 <td th:text="${rent.status}">Status</td>
-                <td><a th:href="${'/rent/delete/' + rent.id}">Delete</a></td>
+                <td th:if="${rent.isActive()}"><form th:name="finish + ${rent.id}" th:action="${'/rent/finish/' + rent.id}" th:method="put"></form><a th:href="'javascript:document.forms[\'finish' + ${rent.id} + '\'].submit();'">Finish</a></td>
+                <td th:if="!${rent.isActive()}">N/A</td>
+                <td th:if="${rent.isActive()}"><form th:name="cancel + ${rent.id}" th:action="${'/rent/cancel/' + rent.id}" th:method="put"></form><a th:href="'javascript:document.forms[\'cancel' + ${rent.id} + '\'].submit();'">Cancel</a></td>
+                <td th:if="!${rent.isActive()}">N/A</td>
             </tr>
-        </table>
+        </tbody>
+    </table>
 
-    </div>
 </div>
-
+<div align="center">
+    <a th:if="!${all}" class="btn btn-default" href="#" th:href="@{'/rents/all'}">View All</a>
+    <a th:if="${all}" class="btn btn-default" href="#" th:href="@{'/rents'}">View Only Active</a>
+</div>
+<div><br/></div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
 </html>

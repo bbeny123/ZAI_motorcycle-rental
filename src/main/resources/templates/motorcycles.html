@@ -27,6 +27,7 @@
                 <th>Colour</th>
                 <th>Price</th>
                 <th>View</th>
+                <th sec:authorize="isAuthenticated()">Rent</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
@@ -45,14 +46,18 @@
                 <td th:text="${motorcycle.colour}">Colour</td>
                 <td th:text="${motorcycle.price}">Price</td>
                 <td><a th:href="${'/motorcycle/details/' + motorcycle.id}">View</a></td>
+                <td sec:authorize="isAuthenticated()" th:if="${motorcycle.isAvailable()}"><form th:name="rent + ${motorcycle.id}" th:action="${'/motorcycle/rent/' + motorcycle.id}" th:method="post"></form><a th:href="'javascript:document.forms[\'rent' + ${motorcycle.id} + '\'].submit();'">Rent</a></td>
+                <td sec:authorize="isAuthenticated()" th:if="!${motorcycle.isAvailable()}">N/A</td>
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="${'/motorcycle/edit/' + motorcycle.id}">Edit</a></td>
                 <td sec:authorize="hasAuthority('ADMIN')"><form th:name="delete + ${motorcycle.id}" th:action="@{/motorcycle/delete}" th:method="delete"><input type="hidden" name="id" th:value="${motorcycle.id}" /></form><a th:href="'javascript:document.forms[\'delete' + ${motorcycle.id} + '\'].submit();'">Delete</a></td>
             </tr>
         </tbody>
     </table>
 </div>
-<div align="center" sec:authorize="hasAuthority('ADMIN')" >
-    <a class="btn btn-default" href="#" th:href="@{/motorcycle/new}">New Motorcycle</a>
+<div align="center">
+    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-default" href="#" th:href="@{/motorcycle/new}">New Motorcycle</a>
+    <a th:if="!${all}" class="btn btn-default" href="#" th:href="@{/motorcycles/all}">View All</a>
+    <a th:if="${all}" class="btn btn-default" href="#" th:href="@{/motorcycles}">View Only Available</a>
 </div>
 <div><br/></div>
 </body>

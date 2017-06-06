@@ -87,7 +87,11 @@
             </div>
         </div>
         <div class="form-group" align="right">
-            <a class="btn btn-default" href="#" th:href="@{/motorcycles}">Back</a>
+            <a sec:authorize="isAuthenticated()" th:if="${motorcycle.isAvailable()}" class="btn btn-default" href="#" th:href="${'/motorcycle/rent/' + motorcycle.id}">Rent</a>
+            <a sec:authorize="isAuthenticated()" th:if="!${motorcycle.isAvailable()}" th:disabled="disabled" class="btn btn-default">Rent</a>
+            <a sec:authorize="!hasAuthority('ADMIN')" class="btn btn-default" href="#" th:href="@{/motorcycles}">Back</a>
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-default" href="#" th:href="@{/motorcycles/all}">Back</a>
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-default" href="#" th:href="@{/motorcycle/edit/} + ${motorcycle.id}">Edit</a>
         </div>
     </form>
 </div>

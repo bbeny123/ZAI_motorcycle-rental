@@ -65,4 +65,8 @@ public class RentData {
         this.status = status;
     }
 
+    public boolean isActive() {
+        return status.equals(Statuses.ACTIVE);
+    }
+
 }
