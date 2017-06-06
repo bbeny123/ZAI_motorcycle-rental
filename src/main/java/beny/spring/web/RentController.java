@@ -28,7 +28,7 @@ public class RentController {
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping("/user/{id}")
     public ModelAndView getUserRents(@PathVariable Long id, Model model) {
-        return new ModelAndView("userRents", "rents", rentService.findById(id));
+        return new ModelAndView("userRents", "rents", rentService.getUserRents(id));
     }
 
     @RequestMapping(value = "/rents/all", method = RequestMethod.GET)

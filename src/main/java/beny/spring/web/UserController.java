@@ -9,10 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -31,9 +28,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "register")
-    public ModelAndView register(@RequestParam Optional<String> error, Model model) {
+    public String register(Model model) {
         model.addAttribute("user", new UserData());
-        return new ModelAndView("registerform", "error", error);
+        return "registerform";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
