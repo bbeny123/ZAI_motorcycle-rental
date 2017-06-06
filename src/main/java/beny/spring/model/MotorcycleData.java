@@ -27,7 +27,7 @@ public class MotorcycleData {
     @Column(name = "MTO_MODEL", length = 20, nullable = false)
     private String model;
 
-    @Column(name = "MTO_PRODUCTION_YEAR", nullable = false)
+    @Column(name = "MTO_YEAR", nullable = false)
     private int productionYear;
 
     @Column(name = "MTO_CAPACITY", nullable = false)
