@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class MotorcycleServiceImpl implements MotorcycleService {
 
-    private MotorcycleRepository motorcycleRepository;
+    private final MotorcycleRepository motorcycleRepository;
 
     @Autowired
     public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository) {

@@ -3,8 +3,6 @@ package beny.spring.repository.jpa;
 import beny.spring.model.MotorcycleData;
 import beny.spring.model.RentData;
 import beny.spring.repository.MotorcycleRepository;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +12,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Beny on 04.06.2017.

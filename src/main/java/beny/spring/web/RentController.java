@@ -1,7 +1,6 @@
 package beny.spring.web;
 
 import beny.spring.model.CurrentUser;
-import beny.spring.model.RentData;
 import beny.spring.service.MotorcycleService;
 import beny.spring.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;

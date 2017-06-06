@@ -3,9 +3,7 @@ package beny.spring.repository.jpa;
 import beny.spring.model.MotorcycleData;
 import beny.spring.model.RentData;
 import beny.spring.model.UserData;
-import beny.spring.repository.MotorcycleRepository;
 import beny.spring.repository.RentRepository;
-import beny.spring.service.MotorcycleService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Collection;
 import java.util.List;
 
 /**

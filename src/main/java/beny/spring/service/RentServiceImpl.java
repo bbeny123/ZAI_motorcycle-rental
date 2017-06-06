@@ -7,7 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 public class RentServiceImpl implements RentService {
 
-    private RentRepository rentRepository;
+    private final RentRepository rentRepository;
 
     @Autowired
     public RentServiceImpl(RentRepository rentRepository) {

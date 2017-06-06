@@ -3,7 +3,6 @@ package beny.spring.service;
 import beny.spring.model.RentData;
 import org.springframework.dao.DataAccessException;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
