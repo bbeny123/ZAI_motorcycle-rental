@@ -27,14 +27,10 @@
         <div class="welcome">
             <span sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span></span>
         </div>
-        <div class="jumbotron">
-            <div class="row text-center">
-                <h2>Motorcycle Rental</h2>
-            </div>
-            <div class="row text-center">
-                <img src="../../static/images/ducati2.jpg" width="600"
-                     th:src="@{/images/ducati2.jpg}"/>
-            </div>
+        <div>
+            <br/>
+                <img src="../../static/images/honda_header.jpg" class="img-rounded img-responsive" th:src="@{/images/honda_header.jpg}"/>
+            <br/>
         </div>
     </div>
 </div>
